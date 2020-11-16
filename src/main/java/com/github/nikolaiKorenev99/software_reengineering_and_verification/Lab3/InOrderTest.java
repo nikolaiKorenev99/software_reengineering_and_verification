@@ -22,10 +22,11 @@ public class InOrderTest {
 
         FunList insertInOrderTest = new Cons(5, new Cons(8));
         insertInOrderTest.append(cons);
+        System.out.println("Original FunList " + insertInOrderTest.toStringHelp());
         System.out.println("Insert 1 " + insertInOrderTest.insertInOrder(1).toStringHelp());
         System.out.println("Insert 11 " + insertInOrderTest.insertInOrder(11).toStringHelp());
         System.out.println("Insert 21 " + insertInOrderTest.insertInOrder(21).toStringHelp());
-        System.out.println("Original FunList " + insertInOrderTest.toStringHelp());
+
     }
 }
 
