@@ -89,4 +89,21 @@ public class Account {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    public String printCustomerAccount(Customer customer) {
+        return "Account: IBAN: " + getIban() + ", Money: "
+                + getMoney() + ", Account type: " + getType();
+    }
+
+    public String printCustomerDaysOverdrawn(Customer customer) {
+        String accountDescription = "Account: IBAN: " + getIban()
+                + ", Days Overdrawn: " + getDaysOverdrawn();
+        return customer.getFullName() + accountDescription;
+    }
+
+    public String printCustomerMoney(Customer customer) {
+        String accountDescription = "";
+        accountDescription += "Account: IBAN: " + getIban() + ", Money: " + getMoney();
+        return customer.getFullName() + accountDescription;
+    }
 }

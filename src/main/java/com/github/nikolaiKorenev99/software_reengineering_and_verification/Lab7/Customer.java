@@ -2,7 +2,7 @@ package com.github.nikolaiKorenev99.software_reengineering_and_verification.Lab7
 
 public class Customer extends AbstractCustomer {
     private DiscountForCustomer discountForCustomer;
-    private Account account;
+    Account account;
     public static final double COMPANY_DISCOUNT = 1;
     public static final double PREMIUM_COMPANY_DISCOUNT = 2;
 
@@ -25,23 +25,6 @@ public class Customer extends AbstractCustomer {
             throw new RuntimeException("Can't extract withdraw " + currency);
         }
         withdrawCustomerTypeCheck(sum);
-    }
-
-    public String printCustomerDaysOverdrawn() {
-        String accountDescription = "Account: IBAN: " + account.getIban()
-                + ", Days Overdrawn: " + account.getDaysOverdrawn();
-        return getFullName() + accountDescription;
-    }
-
-    public String printCustomerMoney() {
-        String accountDescription = "";
-        accountDescription += "Account: IBAN: " + account.getIban() + ", Money: " + account.getMoney();
-        return getFullName() + accountDescription;
-    }
-
-    public String printCustomerAccount() {
-        return "Account: IBAN: " + account.getIban() + ", Money: "
-                + account.getMoney() + ", Account type: " + account.getType();
     }
 
     private void withdrawOverDraft(double sum, double companyOverdraftDiscount) {
