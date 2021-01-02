@@ -20,33 +20,11 @@ public class Customer extends AbstractCustomer {
                 PREMIUM_COMPANY_DISCOUNT);
     }
 
-    public void withdraw(double sum, String currency) {
-        if (!account.getCurrency().equals(currency)) {
-            throw new RuntimeException("Can't extract withdraw " + currency);
-        }
-        withdrawCustomerTypeCheck(sum);
+    public DiscountForCustomer getDiscountForCustomer() {
+        return discountForCustomer;
     }
 
-    private void withdrawOverDraft(double sum, double companyOverdraftDiscount) {
-        if (account.getMoney() < 0) {
-            // no discount for overdraft for not premium account
-            account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount);
-        } else {
-            account.setMoney(account.getMoney() - sum);
-        }
-    }
-
-    private void withdrawCustomerTypeCheck(double sum) {
-        if (account.getType().isPremium() && discountForCustomer.isCompany()) {
-            // 50 percent discount for with premium account
-            withdrawOverDraft(sum, (discountForCustomer.companyOverdraftDiscount
-                    / discountForCustomer.premiumDiscount));
-        } else {
-            withdrawOverDraft(sum, discountForCustomer.companyOverdraftDiscount);
-        }
-    }
-
-    private class DiscountForCustomer {
+    public class DiscountForCustomer {
         private CustomerType customerType;
         private double companyOverdraftDiscount;
         private double premiumDiscount;
@@ -60,6 +38,13 @@ public class Customer extends AbstractCustomer {
 
         public boolean isCompany() {
             return customerType == CustomerType.COMPANY;
+        }
+        public double getCompanyOverdraftDiscount() {
+            return companyOverdraftDiscount;
+        }
+
+        public double getPremiumDiscount() {
+            return premiumDiscount;
         }
     }
 
