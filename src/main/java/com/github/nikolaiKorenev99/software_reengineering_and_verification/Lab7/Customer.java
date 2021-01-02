@@ -79,6 +79,7 @@ public class Customer extends AbstractCustomer {
         switch (customerType) {
             case COMPANY:
                 if (account.getType().isPremium()) {
+                    // 50 percent discount for with premium account
                     withdrawForCompany(sum, companyOverdraftDiscount / 2);
                 } else {
                     withdrawForCompany(sum, this.companyOverdraftDiscount);
