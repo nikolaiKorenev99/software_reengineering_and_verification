@@ -1,6 +1,6 @@
 package com.github.nikolaiKorenev99.software_reengineering_and_verification.Lab8.edu.sumdu.monopoly;
 
-public class UtilityCell extends Cell {
+public class UtilityCell extends OwnedCell {
 
 	public static final String COLOR_GROUP = "UTILITY";
 	private static int PRICE;
@@ -14,9 +14,9 @@ public class UtilityCell extends Cell {
 	}
 
 	public int getRent(int diceRoll) {
-		if(player.numberOfUtil() == 1) {
+		if(owner.numberOfUtil() == 1) {
 			return diceRoll * 4;
-		} else if (player.numberOfUtil() >= 2) {
+		} else if (owner.numberOfUtil() >= 2) {
 			return diceRoll * 10;
 		}
 		return 0;
@@ -26,10 +26,10 @@ public class UtilityCell extends Cell {
 		Player currentPlayer = null;
 		if(!isAvailable()) {
 			currentPlayer = GameMaster.instance().getCurrentPlayer();
-			if(player != currentPlayer) {
+			if(owner != currentPlayer) {
 				GameMaster.instance().utilRollDice();
 				int diceRoll = GameMaster.instance().getUtilDiceRoll();
-				currentPlayer.payRentTo(player, getRent(diceRoll));
+				currentPlayer.payRentTo(owner, getRent(diceRoll));
 			}
 		}
 	}

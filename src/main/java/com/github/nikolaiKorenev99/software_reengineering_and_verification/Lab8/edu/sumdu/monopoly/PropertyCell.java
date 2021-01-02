@@ -1,6 +1,6 @@
 package com.github.nikolaiKorenev99.software_reengineering_and_verification.Lab8.edu.sumdu.monopoly;
 
-public class PropertyCell extends Cell {
+public class PropertyCell extends OwnedCell {
 	private String colorGroup;
 	private int housePrice;
 	private int numHouses;
@@ -46,8 +46,8 @@ public class PropertyCell extends Cell {
 		Player currentPlayer = null;
 		if(!isAvailable()) {
 			currentPlayer = GameMaster.instance().getCurrentPlayer();
-			if(player != currentPlayer) {
-				currentPlayer.payRentTo(player, getRent());
+			if(owner != currentPlayer) {
+				currentPlayer.payRentTo(owner, getRent());
 			}
 		}
 	}
