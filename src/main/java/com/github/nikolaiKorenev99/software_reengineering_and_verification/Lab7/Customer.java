@@ -1,26 +1,19 @@
 package com.github.nikolaiKorenev99.software_reengineering_and_verification.Lab7;
 
-public class Customer {
-
-    private String name;
-    private String surname;
-    private String email;
+public class Customer extends AbstractCustomer {
     private CustomerType customerType;
     private Account account;
     private double companyOverdraftDiscount = 1;
 
     public Customer(String name, String surname, String email, CustomerType customerType, Account account) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
+        super(name, surname, email);
         this.customerType = customerType;
         this.account = account;
     }
 
     // use only to create companies
     public Customer(String name, String email, Account account, double companyOverdraftDiscount) {
-        this.name = name;
-        this.email = email;
+        super(name, email);
         this.customerType = CustomerType.COMPANY;
         this.account = account;
         this.companyOverdraftDiscount = companyOverdraftDiscount;
@@ -33,28 +26,20 @@ public class Customer {
         withdrawCustomerTypeCheck(sum);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public CustomerType getCustomerType() {
         return customerType;
     }
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    public double getCompanyOverdraftDiscount() {
+        return companyOverdraftDiscount;
+    }
+
+    public void setCompanyOverdraftDiscount(double companyOverdraftDiscount) {
+        this.companyOverdraftDiscount = companyOverdraftDiscount;
     }
 
     public String printCustomerDaysOverdrawn() {
@@ -71,10 +56,6 @@ public class Customer {
     public String printCustomerAccount() {
         return "Account: IBAN: " + account.getIban() + ", Money: "
                 + account.getMoney() + ", Account type: " + account.getType();
-    }
-
-    public String getFullName() {
-        return name + " " + surname + " ";
     }
 
     private void withdrawForPerson(double sum) {
