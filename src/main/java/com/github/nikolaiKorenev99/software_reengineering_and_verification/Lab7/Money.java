@@ -20,3 +20,4 @@ public class Money {
         this.currency = currency;
     }
 }
+

@@ -41,8 +41,6 @@ public abstract class AbstractCustomer {
         this.email = email;
     }
 
-
-
     public String getFullName() {
         return name + " " + surname + " ";
     }
