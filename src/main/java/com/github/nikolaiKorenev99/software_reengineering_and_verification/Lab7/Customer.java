@@ -1,4 +1,5 @@
 package com.github.nikolaiKorenev99.software_reengineering_and_verification.Lab7;
+
 public class Customer {
 
     private String name;
@@ -33,40 +34,22 @@ public class Customer {
             switch (customerType) {
                 case COMPANY:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        // 50 percent discount for overdraft for premium account
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount / 2);
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawForCompany(sum, companyOverdraftDiscount / 2);
                     break;
                 case PERSON:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawForPerson(sum);
                     break;
             }
         } else {
             switch (customerType) {
                 case COMPANY:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        // no discount for overdraft for not premium account
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount);
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawForCompany(sum, this.companyOverdraftDiscount);
                     break;
                 case PERSON:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawForPerson(sum);
                     break;
             }
         }
@@ -97,21 +80,39 @@ public class Customer {
     }
 
     public String printCustomerDaysOverdrawn() {
-        String fullName = name + " " + surname + " ";
-
         String accountDescription = "Account: IBAN: " + account.getIban() + ", Days Overdrawn: " + account.getDaysOverdrawn();
-        return fullName + accountDescription;
+        return getFullName() + accountDescription;
     }
 
     public String printCustomerMoney() {
-        String fullName = name + " " + surname + " ";
         String accountDescription = "";
         accountDescription += "Account: IBAN: " + account.getIban() + ", Money: " + account.getMoney();
-        return fullName + accountDescription;
+        return getFullName() + accountDescription;
     }
 
     public String printCustomerAccount() {
         return "Account: IBAN: " + account.getIban() + ", Money: "
                 + account.getMoney() + ", Account type: " + account.getType();
+    }
+
+    public String getFullName() {
+        return name + " " + surname + " ";
+    }
+
+    private void withdrawForPerson(double sum) {
+        if (account.getMoney() < 0) {
+            account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
+        } else {
+            account.setMoney(account.getMoney() - sum);
+        }
+    }
+
+    private void withdrawForCompany(double sum, double companyOverdraftDiscount) {
+        if (account.getMoney() < 0) {
+            // no discount for overdraft for not premium account
+            account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount);
+        } else {
+            account.setMoney(account.getMoney() - sum);
+        }
     }
 }
