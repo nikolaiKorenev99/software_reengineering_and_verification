@@ -30,29 +30,7 @@ public class Customer {
         if (!account.getCurrency().equals(currency)) {
             throw new RuntimeException("Can't extract withdraw " + currency);
         }
-        if (account.getType().isPremium()) {
-            switch (customerType) {
-                case COMPANY:
-                    // we are in overdraft
-                    withdrawForCompany(sum, companyOverdraftDiscount / 2);
-                    break;
-                case PERSON:
-                    // we are in overdraft
-                    withdrawForPerson(sum);
-                    break;
-            }
-        } else {
-            switch (customerType) {
-                case COMPANY:
-                    // we are in overdraft
-                    withdrawForCompany(sum, this.companyOverdraftDiscount);
-                    break;
-                case PERSON:
-                    // we are in overdraft
-                    withdrawForPerson(sum);
-                    break;
-            }
-        }
+        withdrawCustomerTypeCheck(sum);
     }
 
     public String getName() {
@@ -115,4 +93,20 @@ public class Customer {
             account.setMoney(account.getMoney() - sum);
         }
     }
+
+    private void withdrawCustomerTypeCheck(double sum) {
+        switch (customerType) {
+            case COMPANY:
+                if (account.getType().isPremium()) {
+                    withdrawForCompany(sum, companyOverdraftDiscount / 2);
+                } else {
+                    withdrawForCompany(sum, this.companyOverdraftDiscount);
+                }
+                break;
+            case PERSON:
+                withdrawForPerson(sum);
+                break;
+        }
+    }
 }
+
