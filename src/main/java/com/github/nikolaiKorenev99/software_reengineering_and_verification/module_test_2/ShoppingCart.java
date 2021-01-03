@@ -193,7 +193,7 @@ public class ShoppingCart {
     /**
      * item info
      */
-    private static class Item {
+    public static class Item {
         String title;
         double price;
         int quantity;
