@@ -15,6 +15,7 @@ public class AddItemTest {
 
     @Test
     public void addCorrectItem() {
+        // if will be some exception method failed
         cart.addItem("Title regular", 5, 1, Item.Type.REGULAR);
         cart.addItem("Title discount ", 10, 800, Item.Type.DISCOUNT);
         cart.addItem("Title second", 100, 900, Item.Type.SECOND);

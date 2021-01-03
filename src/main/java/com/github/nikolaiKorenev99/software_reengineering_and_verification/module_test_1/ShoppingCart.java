@@ -47,7 +47,8 @@ public class ShoppingCart {
         items.add(item);
     }
 
-    /**IllegalArgumentException
+    /**
+     * IllegalArgumentException
      * Formats shopping price.
      *
      * @return string as lines, separated with \n,
@@ -146,7 +147,7 @@ public class ShoppingCart {
      * For Item.Type.SALE discount is 90%
      * For each full 100 items item gets additional 10%, but not more than 80% total
      */
-    private static int calculateDiscount(Item item) {
+    public static int calculateDiscount(Item item) {
         int discount = 0;
         switch (item.getType()) {
             case SECOND:
@@ -164,6 +165,10 @@ public class ShoppingCart {
         discount += item.getQuantity() / 100 * 10;
         if (discount > 80)
             discount = 80;
+
+        if (item.getType() == SALE) {
+            discount = 90;
+        }
         return discount;
     }
 
