@@ -66,14 +66,8 @@ public class ShoppingCart {
         for (Item item : items) {
             int discount = calculateDiscount(item.getType(), item.getQuantity());
             double itemTotal = item.getPrice() * item.getQuantity() * (100.00 - discount) / 100.00;
-            lines.add(new String[]{
-                    String.valueOf(++index),
-                    item.getTitle(),
-                    MONEY.format(item.getPrice()),
-                    String.valueOf(item.getQuantity()),
-                    (discount == 0) ? "-" : (String.valueOf(discount) + "%"),
-                    MONEY.format(itemTotal)
-            });
+            index++;
+            lines.add(formatValueAddLine(index, item, discount, itemTotal));
             total += itemTotal;
         }
         return formatTable(lines, total, index);
@@ -217,6 +211,19 @@ public class ShoppingCart {
                 sb.append("-");
             sb.append("\n");
         }
+    }
+
+    /**
+     * Method for format Value
+     */
+    private String[] formatValueAddLine(int index, Item item, int discount, double itemTotal) {
+        return new String[]{
+                String.valueOf(index),
+                item.getTitle(),
+                MONEY.format(item.getPrice()),
+                String.valueOf(item.getQuantity()),
+                (discount == 0) ? "-" : (String.valueOf(discount) + "%"),
+                MONEY.format(itemTotal)};
     }
 
     /**
