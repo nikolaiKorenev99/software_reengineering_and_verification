@@ -59,68 +59,29 @@ public class ShoppingCart {
      * <p>
      * if no items in cart returns "No items." string.
      */
+
+
     public String formatTicket() {
         if (items.size() == 0)
             return "No items.";
         List<String[]> lines = new ArrayList<String[]>();
-        String[] header = {"#", "Item", "Price", "Quan.", "Discount", "Total"};
-        int[] align = new int[]{1, -1, 1, 1, 1, 1};
         // formatting each line
         double total = 0.00;
         int index = 0;
-        for (com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item item : items) {
+        for (Item item : items) {
             int discount = calculateDiscount(item.getType(), item.getQuantity());
             double itemTotal = item.getPrice() * item.getQuantity() * (100.00 - discount) / 100.00;
             lines.add(new String[]{
                     String.valueOf(++index),
                     item.getTitle(),
-                    MONEY.format(item.getPrice() ),
+                    MONEY.format(item.getPrice()),
                     String.valueOf(item.getQuantity()),
                     (discount == 0) ? "-" : (String.valueOf(discount) + "%"),
                     MONEY.format(itemTotal)
             });
             total += itemTotal;
         }
-        String[] footer = {String.valueOf(index), "", "", "", "", MONEY.format(total)};
-        // formatting table
-        // column max length
-        int[] width = new int[]{0, 0, 0, 0, 0, 0};
-        for (String[] line : lines)
-            for (int i = 0; i < line.length; i++)
-                width[i] = (int) Math.max(width[i], line[i].length());
-        for (int i = 0; i < header.length; i++)
-            width[i] = (int) Math.max(width[i], header[i].length());
-        for (int i = 0; i < footer.length; i++)
-            width[i] = (int) Math.max(width[i], footer[i].length());
-        // line length
-        int lineLength = width.length - 1;
-        for (int w : width)
-            lineLength += w;
-        StringBuilder sb = new StringBuilder();
-        // header
-        for (int i = 0; i < header.length; i++)
-            appendFormatted(sb, header[i], align[i], width[i]);
-        sb.append("\n");
-        // separator
-        for (int i = 0; i < lineLength; i++)
-            sb.append("-");
-        sb.append("\n");
-        // lines
-        for (String[] line : lines) {
-            for (int i = 0; i < line.length; i++)
-                appendFormatted(sb, line[i], align[i], width[i]);
-            sb.append("\n");
-        }
-        if (lines.size() > 0) {
-            // separator
-            for (int i = 0; i < lineLength; i++)
-                sb.append("-");
-            sb.append("\n");
-        }
-        // footer
-        for (int i = 0; i < footer.length; i++)
-            appendFormatted(sb, footer[i], align[i], width[i]);
-        return sb.toString();
+        return formatTable(lines, total, index);
     }
 
     // --- private section -----------------------------------------------------
@@ -188,5 +149,61 @@ public class ShoppingCart {
     /**
      * Container for added items
      */
-    private List<com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item> items = new ArrayList<com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item>();
+    private List<Item> items = new ArrayList<com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item>();
+
+    /**
+     * Method for table creating
+     *
+     * @param lines lines
+     * @param total total
+     * @param index index
+     * @return String
+     */
+    private String formatTable(List<String[]> lines, double total, int index) {
+        // formatting table
+        String[] header = {"#", "Item", "Price", "Quan.", "Discount", "Total"};
+        String[] footer = {String.valueOf(index), "", "", "", "", MONEY.format(total)};
+        int[] align = new int[]{1, -1, 1, 1, 1, 1};
+        // column max length
+        int[] width = new int[]{0, 0, 0, 0, 0, 0};
+        for (String[] line : lines)
+            for (int i = 0; i < line.length; i++)
+                width[i] = (int) Math.max(width[i], line[i].length());
+
+        for (int i = 0; i < header.length; i++)
+            width[i] = (int) Math.max(width[i], header[i].length());
+
+        for (int i = 0; i < footer.length; i++)
+            width[i] = (int) Math.max(width[i], footer[i].length());
+
+        // line length
+        int lineLength = width.length - 1;
+        for (int w : width)
+            lineLength += w;
+        StringBuilder sb = new StringBuilder();
+        // header
+        for (int i = 0; i < header.length; i++)
+            appendFormatted(sb, header[i], align[i], width[i]);
+        sb.append("\n");
+        // separator
+        for (int i = 0; i < lineLength; i++)
+            sb.append("-");
+        sb.append("\n");
+        // lines
+        for (String[] line : lines) {
+            for (int i = 0; i < line.length; i++)
+                appendFormatted(sb, line[i], align[i], width[i]);
+            sb.append("\n");
+        }
+        if (lines.size() > 0) {
+            // separator
+            for (int i = 0; i < lineLength; i++)
+                sb.append("-");
+            sb.append("\n");
+        }
+        // footer
+        for (int i = 0; i < footer.length; i++)
+            appendFormatted(sb, footer[i], align[i], width[i]);
+        return sb.toString();
+    }
 }
