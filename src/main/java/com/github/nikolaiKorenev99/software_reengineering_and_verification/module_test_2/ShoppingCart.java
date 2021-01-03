@@ -163,8 +163,8 @@ public class ShoppingCart {
         int[] width = new int[]{0, 0, 0, 0, 0, 0};
         for (String[] line : lines)
             width = formatBorderWidth(line, width);
-            width = formatBorderWidth(header, width);
-            width = formatBorderWidth(footer, width);
+        width = formatBorderWidth(header, width);
+        width = formatBorderWidth(footer, width);
 
         // line length
         int lineLength = width.length - 1;
@@ -182,12 +182,7 @@ public class ShoppingCart {
             formatBorder(sb, line, align, width);
         }
 
-        if (lines.size() > 0) {
-            // separator
-            for (int i = 0; i < lineLength; i++)
-                sb.append("-");
-            sb.append("\n");
-        }
+        formatBorderAddSeparator(sb, lines, lineLength);
         // footer
         for (int i = 0; i < footer.length; i++)
             appendFormatted(sb, footer[i], align[i], width[i]);
@@ -211,7 +206,11 @@ public class ShoppingCart {
             width[i] = (int) Math.max(width[i], borderType[i].length());
         return width;
     }
-    private void formatBorderAddSeperator(StringBuilder sb, String[] lines, int lineLength){
+
+    /**
+     * Method for border separator
+     */
+    private void formatBorderAddSeparator(StringBuilder sb, List<String[]> lines, int lineLength) {
         if (lines.size() > 0) {
             // separator
             for (int i = 0; i < lineLength; i++)
@@ -219,6 +218,7 @@ public class ShoppingCart {
             sb.append("\n");
         }
     }
+
     /**
      * Method for check correct parameters for Item
      */
