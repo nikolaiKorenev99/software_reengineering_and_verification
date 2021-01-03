@@ -1,5 +1,7 @@
 package com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2;
 
+import com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item.ItemType;
+
 import java.util.*;
 import java.text.*;
 
@@ -7,9 +9,6 @@ import java.text.*;
  * Containing items and calculating price.
  */
 public class ShoppingCart {
-    public static enum ItemType {NEW, REGULAR, SECOND_FREE, SALE}
-
-    ;
 
     /**
      * Tests all class methods.
@@ -40,11 +39,7 @@ public class ShoppingCart {
             throw new IllegalArgumentException("Illegal price");
         if (quantity <= 0)
             throw new IllegalArgumentException("Illegal quantity");
-        Item item = new Item();
-        item.title = title;
-        item.price = price;
-        item.quantity = quantity;
-        item.type = type;
+        Item item = new Item(title, price, quantity, type);
         items.add(item);
     }
 
@@ -73,14 +68,14 @@ public class ShoppingCart {
         // formatting each line
         double total = 0.00;
         int index = 0;
-        for (Item item : items) {
-            int discount = calculateDiscount(item.type, item.quantity);
-            double itemTotal = item.price * item.quantity * (100.00 - discount) / 100.00;
+        for (com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item item : items) {
+            int discount = calculateDiscount(item.getType(), item.getQuantity());
+            double itemTotal = item.getPrice() * item.getQuantity() * (100.00 - discount) / 100.00;
             lines.add(new String[]{
                     String.valueOf(++index),
-                    item.title,
-                    MONEY.format(item.price),
-                    String.valueOf(item.quantity),
+                    item.getTitle(),
+                    MONEY.format(item.getPrice() ),
+                    String.valueOf(item.getQuantity()),
                     (discount == 0) ? "-" : (String.valueOf(discount) + "%"),
                     MONEY.format(itemTotal)
             });
@@ -191,17 +186,7 @@ public class ShoppingCart {
     }
 
     /**
-     * item info
-     */
-    public static class Item {
-        String title;
-        double price;
-        int quantity;
-        ItemType type;
-    }
-
-    /**
      * Container for added items
      */
-    private List<Item> items = new ArrayList<Item>();
+    private List<com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item> items = new ArrayList<com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item>();
 }

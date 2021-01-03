@@ -1,7 +1,5 @@
 package com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2;
 
-
-import com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_1.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -9,10 +7,7 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.ShoppingCart.ItemType.SALE;
-import static com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.ShoppingCart.ItemType.REGULAR;
-import static com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.ShoppingCart.ItemType.NEW;
-import static com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.ShoppingCart.ItemType.SECOND_FREE;
+import static com.github.nikolaiKorenev99.software_reengineering_and_verification.module_test_2.Item.ItemType.*;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
@@ -24,7 +19,7 @@ public class DiscountTest {
 //            Item.Type.SALE,
 //            Item.Type.DISCOUNT
 //    };
-    private static final ShoppingCart.ItemType[] T_VALUES = new ShoppingCart.ItemType[]{NEW, REGULAR, SECOND_FREE, SALE};
+    private static final Item.ItemType[] T_VALUES = new Item.ItemType[]{NEW, REGULAR, SECOND_FREE, SALE};
     private static final int[][] D_VALUES =
             {
                     {0, 0, 0, 0, 0, 0, 0}, //NEW
@@ -49,11 +44,11 @@ public class DiscountTest {
         return pairs;
     }
 
-    private ShoppingCart.ItemType _type;
+    private Item.ItemType _type;
     private int _quantity;
     private int _discount;
 
-    public DiscountTest(ShoppingCart.ItemType type, int quantity, int discount) {
+    public DiscountTest(Item.ItemType type, int quantity, int discount) {
         _type = type;
         _quantity = quantity;
         _discount = discount;
