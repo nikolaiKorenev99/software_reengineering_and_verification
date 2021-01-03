@@ -162,14 +162,9 @@ public class ShoppingCart {
         // column max length
         int[] width = new int[]{0, 0, 0, 0, 0, 0};
         for (String[] line : lines)
-            for (int i = 0; i < line.length; i++)
-                width[i] = (int) Math.max(width[i], line[i].length());
-
-        for (int i = 0; i < header.length; i++)
-            width[i] = (int) Math.max(width[i], header[i].length());
-
-        for (int i = 0; i < footer.length; i++)
-            width[i] = (int) Math.max(width[i], footer[i].length());
+            width = formatBorderWidth(line, width);
+            width = formatBorderWidth(header, width);
+            width = formatBorderWidth(footer, width);
 
         // line length
         int lineLength = width.length - 1;
@@ -177,19 +172,16 @@ public class ShoppingCart {
             lineLength += w;
         StringBuilder sb = new StringBuilder();
         // header
-        for (int i = 0; i < header.length; i++)
-            appendFormatted(sb, header[i], align[i], width[i]);
-        sb.append("\n");
-        // separator
+        formatBorder(sb, header, align, width);
+
         for (int i = 0; i < lineLength; i++)
             sb.append("-");
         sb.append("\n");
         // lines
         for (String[] line : lines) {
-            for (int i = 0; i < line.length; i++)
-                appendFormatted(sb, line[i], align[i], width[i]);
-            sb.append("\n");
+            formatBorder(sb, line, align, width);
         }
+
         if (lines.size() > 0) {
             // separator
             for (int i = 0; i < lineLength; i++)
@@ -202,6 +194,31 @@ public class ShoppingCart {
         return sb.toString();
     }
 
+    /**
+     * Method for border
+     */
+    private void formatBorder(StringBuilder sb, String[] borderType, int[] align, int[] width) {
+        for (int i = 0; i < borderType.length; i++)
+            appendFormatted(sb, borderType[i], align[i], width[i]);
+        sb.append("\n");
+    }
+
+    /**
+     * Method for border width
+     */
+    private int[] formatBorderWidth(String[] borderType, int width[]) {
+        for (int i = 0; i < borderType.length; i++)
+            width[i] = (int) Math.max(width[i], borderType[i].length());
+        return width;
+    }
+    private void formatBorderAddSeperator(StringBuilder sb, String[] lines, int lineLength){
+        if (lines.size() > 0) {
+            // separator
+            for (int i = 0; i < lineLength; i++)
+                sb.append("-");
+            sb.append("\n");
+        }
+    }
     /**
      * Method for check correct parameters for Item
      */

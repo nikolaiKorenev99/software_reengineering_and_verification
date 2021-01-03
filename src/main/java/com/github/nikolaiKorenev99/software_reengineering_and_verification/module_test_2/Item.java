@@ -4,7 +4,7 @@ package com.github.nikolaiKorenev99.software_reengineering_and_verification.modu
  * item info
  */
 public class Item {
-    public static enum ItemType {NEW, REGULAR, SECOND_FREE, SALE}
+    public enum ItemType {NEW, REGULAR, SECOND_FREE, SALE}
 
     ;
     private String title;
