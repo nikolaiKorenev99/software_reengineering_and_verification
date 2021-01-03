@@ -160,6 +160,17 @@ public class ShoppingCart {
         width = formatBorderWidth(header, width);
         width = formatBorderWidth(footer, width);
 
+        StringBuilder sb = formatBorderLine(width, header, align, lines);
+        // footer
+        for (int i = 0; i < footer.length; i++)
+            appendFormatted(sb, footer[i], align[i], width[i]);
+        return sb.toString();
+    }
+
+    /**
+     * Method for border line
+     */
+    private StringBuilder formatBorderLine(int width[], String[] header, int[] align, List<String[]> lines) {
         // line length
         int lineLength = width.length - 1;
         for (int w : width)
@@ -175,12 +186,8 @@ public class ShoppingCart {
         for (String[] line : lines) {
             formatBorder(sb, line, align, width);
         }
-
         formatBorderAddSeparator(sb, lines, lineLength);
-        // footer
-        for (int i = 0; i < footer.length; i++)
-            appendFormatted(sb, footer[i], align[i], width[i]);
-        return sb.toString();
+        return sb;
     }
 
     /**
